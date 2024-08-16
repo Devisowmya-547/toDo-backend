@@ -1,0 +1,78 @@
+post http://localhost:4000/note/addNote
+Content-Type: application/json
+
+{
+    "title" : "Sample Title1",
+    "description" : "Sample description2",
+    "email" : "sampleTest1@gmail.com"
+}
+
+###
+put http://localhost:4000/note/updateNote
+Content-Type: application/json
+
+{
+    "title" : "Sample Title",
+    "description" : "Updated description1",
+    "email" : "sampleTest@gmail.com"
+}
+
+###
+delete http://localhost:4000/note/deleteNote
+Content-Type: application/json
+
+{
+    "title" : "Sample Title",
+    "email" : "sampleTest@gmail.com",
+    "description" : "Sample description"
+}
+
+###
+post http://localhost:4000/task/addTask
+Content-Type: application/json
+
+{
+    "title" : "Sample Title2",
+    "description" : "Sample description",
+    "deadline" : "18-08-2024"
+}
+
+###
+put http://localhost:4000/task/updateTask
+Content-Type: application/json
+
+{
+    "title" : "Sample Title",
+    "description" : "Sample description",
+    "deadline" : "15-08-2024"
+}
+
+###
+delete http://localhost:4000/task/deleteTask
+Content-Type: application/json
+
+{
+    "title" : "Sample Title",
+    "description" : "Sample description",
+    "deadline" : "15-08-2024"
+}
+
+
+###
+post http://localhost:4000/user/register
+Content-Type: application/json
+
+{
+    "name" : "Devi Sowmya",
+    "email" : "sampleTest2@gmail.com",
+    "password" : "chinna@2723"
+}
+
+###
+post http://localhost:4000/user/login
+Content-Type: application/json
+
+{
+    "email" : "sampleTest2@gmail.com",
+    "password" : "chinna@2723"
+}
