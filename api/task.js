@@ -58,6 +58,10 @@ taskApp.delete('/deletetask',async (req, res) => {
   res.send({message : 'task deleted successfully'})
 })
 
+taskApp.get('/getTasks', async(req, res) => {
+  const email = req.body.email
+  const tasks = await taskCollection.find({email : email}).toArray();
+  res.send({tasks : tasks})
+})
+
 module.exports = taskApp
-
-

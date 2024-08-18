@@ -56,4 +56,10 @@ noteApp.delete('/deleteNote',async (req, res) => {
   res.send({message : 'Note deleted successfully'})
 })
 
+noteApp.get('/getNotes', async (req, res) => {
+  const email = req.body.email
+  const notes = await noteCollection.find({email : email}).toArray()
+  res.send({notes : notes})
+})
+
 module.exports = noteApp
