@@ -1,9 +1,9 @@
-//require('dotenv').config()
+require('dotenv').config()
 const express = require('express')
 const { MongoClient } = require('mongodb')
 const app = express()
 const port = 4000
-const uri = 'mongodb://localhost:27017'
+const uri = process.env.MONGO_URL
 const noteApp = require('./api/note.js')
 const taskApp = require('./api/task.js')
 const userApp = require('./api/users.js')
