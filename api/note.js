@@ -34,7 +34,7 @@ noteApp.put('/updateNote',async (req, res) => {
   let arr = await noteCollection.findOne({email : email})
   arr = arr.notes;
   const samp  = arr.find((noteSamp) => noteSamp.title === note.title);
-  samp.description = note.description;
+  samp.desc = note.desc;
   await noteCollection.findOneAndUpdate(
     {email : email},
     {$set : {notes : arr}},
@@ -43,11 +43,11 @@ noteApp.put('/updateNote',async (req, res) => {
   res.send({message : 'Note updated'})
 })
 
-noteApp.delete('/deleteNote',async (req, res) => {
-  const {email, ...note} = req.body
+noteApp.put('/deleteNote',async (req, res) => {
+  const {email, delTitle} = req.body
   let arr = await noteCollection.findOne({email : email})
   arr = arr.notes;
-  const samp = arr.splice(arr.findIndex(a => a.title === note.title) , 1)
+  arr.splice(arr.findIndex(a => a.title === delTitle) , 1)
   await noteCollection.findOneAndUpdate(
     {email : email},
     {$set : {notes : arr}},
@@ -56,8 +56,8 @@ noteApp.delete('/deleteNote',async (req, res) => {
   res.send({message : 'Note deleted successfully'})
 })
 
-noteApp.get('/getNotes', async (req, res) => {
-  const email = req.body.email
+noteApp.get('/getNotes/:id', async (req, res) => {
+  const email = req.params.id
   const notes = await noteCollection.find({email : email}).toArray()
   res.send({notes : notes})
 })

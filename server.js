@@ -1,5 +1,6 @@
 require('dotenv').config()
 const express = require('express')
+const cors = require('cors')
 const { MongoClient } = require('mongodb')
 const app = express()
 const port = 4000
@@ -8,7 +9,7 @@ const noteApp = require('./api/note.js')
 const taskApp = require('./api/task.js')
 const userApp = require('./api/users.js')
 
-
+app.use(cors())
 app.use(express.json())
 
 MongoClient.connect(uri)
@@ -31,5 +32,5 @@ app.use('/task',taskApp)
 app.use('/user',userApp)
 
 app.listen(port, () => {
-  console.log(`Server listening on port number ${port}\nhttps://localhost:7777`)
+  console.log(`Server listening on port number ${port}\nhttps://localhost:${port}`)
 })

@@ -10,7 +10,8 @@ taskApp.use((req, res, next) => {
 })
 
 taskApp.post('/addtask',async (req, res) => {
-  const{email, ...task} = req.body
+  let{email, ...task} = req.body
+  task['done'] = false;
   let arr = await taskCollection.findOne({email : email})
   if (arr === null){
     await taskCollection.insertOne({email : email, tasks : [task]})
@@ -35,8 +36,9 @@ taskApp.put('/updatetask',async (req, res) => {
   let arr = await taskCollection.findOne({email : email})
   arr = arr.tasks
   const samp  = arr.find((taskSamp) => taskSamp.title === task.title);
-  samp.description = task.description;
+  samp.desc = task.desc;
   samp.deadline = task.deadline;
+  samp.done = task.done;
   await taskCollection.findOneAndUpdate(
     {email : email},
     {$set : {tasks : arr}},
@@ -45,11 +47,11 @@ taskApp.put('/updatetask',async (req, res) => {
   res.send({message : 'task updated'})
 })
 
-taskApp.delete('/deletetask',async (req, res) => {
-  const {email, ...task} = req.body
+taskApp.put('/deletetask',async (req, res) => {
+  const {email, delTitle} = req.body
   let arr = await taskCollection.findOne({email : email})
   arr = arr.tasks;
-  const samp = arr.splice(arr.findIndex(a => a.title === task.title) , 1)
+  arr.splice(arr.findIndex(a => a.title === delTitle) , 1)
   await taskCollection.findOneAndUpdate(
     {email : email},
     {$set : {tasks : arr}},
@@ -58,8 +60,8 @@ taskApp.delete('/deletetask',async (req, res) => {
   res.send({message : 'task deleted successfully'})
 })
 
-taskApp.get('/getTasks', async(req, res) => {
-  const email = req.body.email
+taskApp.get('/getTasks/:id', async(req, res) => {
+  const email = req.params.id
   const tasks = await taskCollection.find({email : email}).toArray();
   res.send({tasks : tasks})
 })
